@@ -1,0 +1,55 @@
+/*
+Theme Name: tema-sobre-ruedas
+Theme URI: http://localhost/sobre-ruedas/
+Author: Alex Fariña
+Author URI: http://localhost/sobre-ruedas/
+Description: Tema  de WordPress personalizado
+Version: 1.0
+*/
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#header{
+    background-color: #333;
+    height: 150px;
+    border-bottom: 2px solid black;
+}
+
+p{
+    text-align: justify;
+    margin: 40px;
+}
+
+body{
+    background-color: white;
+    color: white;
+}
+aside{
+    background-color: rgb(88, 81, 81);
+}
+.main{
+    display: grid;
+    grid-template-columns:  80% 20%;
+}
+#footer{
+    background-color: #333;
+    height: 150px;
+    border-top: 2px solid black;
+}
+
+.post{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 100px;
+}
+
+.footer{
+    background-color: white;
+    height: 150px;
+}
+
+
