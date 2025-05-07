@@ -17,6 +17,7 @@ Version: 1.0
     background-color: #333;
     height: 150px;
     border-bottom: 2px solid black;
+    color: white ;
 }
 
 p{
@@ -26,19 +27,17 @@ p{
 
 body{
     background-color: white;
-    color: white;
+    color: black;
 }
 aside{
     background-color: rgb(88, 81, 81);
 }
-.main{
-    display: grid;
-    grid-template-columns:  80% 20%;
-}
+
 #footer{
     background-color: #333;
     height: 150px;
     border-top: 2px solid black;
+    color: white;
 }
 
 .post{
@@ -52,4 +51,38 @@ aside{
     height: 150px;
 }
 
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.producto-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    background-color: #fff;
+    text-align: center;
+    transition: box-shadow 0.3s;
+}
+
+.producto-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.producto-imagen img {
+    max-width: 100%;
+    height: auto;
+}
+
+.producto-info h2 {
+    font-size: 1.1rem;
+    margin: 10px 0;
+}
+
+.producto-precio {
+    font-size: 1.1rem;
+    color: #000;
+}
 
