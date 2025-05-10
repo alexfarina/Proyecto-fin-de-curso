@@ -8,7 +8,9 @@
 </head>
 <body <?php body_class(); ?>>
     <header id="header" class="header">
-        <h4 class="logo"><a href="<?php echo home_url(); ?>" style="text-decoration:none; color:white;">Logo</a></h4>
-        <nav class="nav">Menú</nav>
+        <h4 class="logo"><a href="<?php echo home_url(); ?>" style="text-decoration:none; color:white;"><img></img></a></h4>
+        <nav class="nav">
+        <?php mostrar_menu_de_productos() ?>
+        </nav>
     </header>
     <section class="section">
