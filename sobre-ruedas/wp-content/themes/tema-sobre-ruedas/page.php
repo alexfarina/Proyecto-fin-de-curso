@@ -1,11 +1,24 @@
 <?php
-get_header();
-printf('Este el el archivo principal que usa wordprres para mostras templates de paginas estaticas');
-//get_header('secundario');
-//include TEMPLATEPATH . '/content.php';
-get_template_part('content');
-get_sidebar();
-get_footer();
-?>
+/**
+ * Template Name: Plantilla de para paginas estaticas.
+ * Description: Plantilla de para paginas estaticas.
+ */
 
-   
+defined( 'ABSPATH' ) || exit;
+
+get_header(); ?>
+
+<div class="contact-page">
+    <h1><?php the_title(); ?></h1>
+
+    <div class="page-content">
+        <?php
+        while ( have_posts() ) :
+            the_post();
+            the_content();
+        endwhile;
+        ?>
+    </div>
+</div>
+
+<?php get_footer(); ?>

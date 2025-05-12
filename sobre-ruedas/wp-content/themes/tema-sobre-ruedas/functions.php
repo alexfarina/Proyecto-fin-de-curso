@@ -48,3 +48,38 @@ function mostrar_menu_de_productos() {
     }
 }
 
+// Cambiar el número de columnas en las páginas de categorías de WooCommerce
+add_filter('loop_shop_columns', 'cambiar_columnas_categoria', 999);
+
+function cambiar_columnas_categoria() {
+    return 3;
+}
+
+remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
+
+add_filter( 'woocommerce_enqueue_styles', 'quitar_estilos_visuales_woo' );
+function quitar_estilos_visuales_woo( $styles ) {
+    unset( $styles['woocommerce-general'] ); 
+    return $styles;
+}
+
+function tema_sobre_ruedas_enqueue_styles() {
+    wp_enqueue_style('tema-sobre-ruedas-style', get_stylesheet_uri());
+}
+add_action('wp_enqueue_scripts', 'tema_sobre_ruedas_enqueue_styles');
+
+
+add_filter( 'woocommerce_enqueue_styles', '__return_false' );
+
+// Eliminar el texto "¡Oferta!" de los productos con descuento
+remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
+
+
+function desactivar_estilos_woocommerce_enlaces() {
+    // Desactiva los estilos de enlaces predeterminados de WooCommerce
+    wp_dequeue_style( 'woocommerce-general' ); // Desactiva el estilo general de WooCommerce
+    wp_dequeue_style( 'woocommerce-layout' );   // Desactiva el estilo de layout de WooCommerce
+}
+
+add_action( 'wp_enqueue_scripts', 'desactivar_estilos_woocommerce_enlaces', 99 );
+

@@ -1,3 +1,4 @@
+
 <main class="main">
     <section class="section">
         <?php
@@ -7,7 +8,6 @@
                 // Obtener el término de la categoría actual
                 $term = get_queried_object();
                 
-
                 // Asegurarnos de que el término tenga un slug
                 if ( ! isset($term->slug) ) {
                     echo 'No se ha encontrado el slug de la categoría.';
@@ -42,13 +42,13 @@
             // Ejecutar WP_Query para obtener los productos
             $loop = new WP_Query( $args );
 
-            // Verificar si hay productos disponibles
+    
             if ( $loop->have_posts() ) :
-                echo '<div class="productos-grid">';
+                echo '<ul class="products">'; 
                 while ( $loop->have_posts() ) : $loop->the_post();
                     global $product;
                     ?>
-                    <div class="producto-item">
+                    <li class="product <?php if ( ! $product->is_in_stock() ) echo 'outofstock'; ?>"> 
                         <a href="<?php the_permalink(); ?>">
                             <?php if ( has_post_thumbnail() ) : ?>
                                 <div class="producto-imagen">
@@ -56,16 +56,16 @@
                                 </div>
                             <?php endif; ?>
                             <div class="producto-info">
-                                <h2><?php the_title(); ?></h2>
+                                <h2 class="producto-titulo"><?php the_title(); ?></h2>
                                 <p class="producto-precio">
                                     <?php echo $product->get_price_html(); ?>
                                 </p>
                             </div>
                         </a>
-                    </div>
+                    </li>
                     <?php
                 endwhile;
-                echo '</div>';
+                echo '</ul>'; 
             else :
                 echo '<p>No hay productos disponibles en esta categoría.</p>';
             endif;

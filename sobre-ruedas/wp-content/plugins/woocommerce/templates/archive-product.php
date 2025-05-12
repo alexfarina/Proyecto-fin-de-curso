@@ -1,97 +1,77 @@
-<?php
-/**
- * The Template for displaying product archives, including the main shop page which is a post type archive
- *
- * This template can be overridden by copying it to yourtheme/woocommerce/archive-product.php.
- *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to do this as little as possible, but it does
- * happen. When this occurs the version of the template file will be bumped and
- * the readme will list any important changes.
- *
- * @see https://woocommerce.com/document/template-structure/
- * @package WooCommerce\Templates
- * @version 8.6.0
- */
 
-defined( 'ABSPATH' ) || exit;
+<main class="main">
+    <section class="section">
+        <?php
+        if ( class_exists( 'WooCommerce' ) ) :
+            // Verificar si estamos en una página de categoría de producto
+            if ( is_product_category() ) :
+                // Obtener el término de la categoría actual
+                $term = get_queried_object();
+                
+                // Asegurarnos de que el término tenga un slug
+                if ( ! isset($term->slug) ) {
+                    echo 'No se ha encontrado el slug de la categoría.';
+                } else {
+                    echo 'Slug de la categoría: ' . $term->slug;
+                }
 
-get_header( 'shop' );
+                // Crear los argumentos para WP_Query filtrando por la categoría actual
+                $args = array(
+                    'post_type'      => 'product',
+                    'posts_per_page' => 9,
+                    'post_status'    => 'publish',
+                    'tax_query'      => array(
+                        array(
+                            'taxonomy' => 'product_cat',
+                            'field'    => 'slug',
+                            'terms'    => $term->slug, // Usamos el slug de la categoría actual
+                            'operator' => 'IN',
+                        ),
+                    ),
+                );
 
-/**
- * Hook: woocommerce_before_main_content.
- *
- * @hooked woocommerce_output_content_wrapper - 10 (outputs opening divs for the content)
- * @hooked woocommerce_breadcrumb - 20
- * @hooked WC_Structured_Data::generate_website_data() - 30
- */
-do_action( 'woocommerce_before_main_content' );
+            else :
+                // Si no estamos en una categoría, mostrar todos los productos
+                $args = array(
+                    'post_type'      => 'product',
+                    'posts_per_page' => 9,
+                    'post_status'    => 'publish',
+                );
+            endif;
 
-/**
- * Hook: woocommerce_shop_loop_header.
- *
- * @since 8.6.0
- *
- * @hooked woocommerce_product_taxonomy_archive_header - 10
- */
-do_action( 'woocommerce_shop_loop_header' );
+            // Ejecutar WP_Query para obtener los productos
+            $loop = new WP_Query( $args );
 
-if ( woocommerce_product_loop() ) {
 
-	/**
-	 * Hook: woocommerce_before_shop_loop.
-	 *
-	 * @hooked woocommerce_output_all_notices - 10
-	 * @hooked woocommerce_result_count - 20
-	 * @hooked woocommerce_catalog_ordering - 30
-	 */
-	do_action( 'woocommerce_before_shop_loop' );
+            if ( $loop->have_posts() ) :
+                echo '<ul class="products">';
+                while ( $loop->have_posts() ) : $loop->the_post();
+                    global $product;
+                    ?>
+                    <li class="product <?php if ( ! $product->is_in_stock() ) echo 'outofstock'; ?>"> 
+                        <a href="<?php the_permalink(); ?>">
+                            <?php if ( has_post_thumbnail() ) : ?>
+                                <div class="producto-imagen">
+                                    <?php the_post_thumbnail( 'medium' ); ?>
+                                </div>
+                            <?php endif; ?>
+                            <div class="producto-info">
+                                <h2 class="producto- titulo woocommerce-loop-product__title"><?php the_title(); ?></h2>
+                                <p class="producto-precio">
+                                    <?php echo $product->get_price_html(); ?>
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    <?php
+                endwhile;
+                echo '</ul>'; 
+            else :
+                echo '<p>No hay productos disponibles en esta categoría.</p>';
+            endif;
 
-	woocommerce_product_loop_start();
-
-	if ( wc_get_loop_prop( 'total' ) ) {
-		while ( have_posts() ) {
-			the_post();
-
-			/**
-			 * Hook: woocommerce_shop_loop.
-			 */
-			do_action( 'woocommerce_shop_loop' );
-
-			wc_get_template_part( 'content', 'product' );
-		}
-	}
-
-	woocommerce_product_loop_end();
-
-	/**
-	 * Hook: woocommerce_after_shop_loop.
-	 *
-	 * @hooked woocommerce_pagination - 10
-	 */
-	do_action( 'woocommerce_after_shop_loop' );
-} else {
-	/**
-	 * Hook: woocommerce_no_products_found.
-	 *
-	 * @hooked wc_no_products_found - 10
-	 */
-	do_action( 'woocommerce_no_products_found' );
-}
-
-/**
- * Hook: woocommerce_after_main_content.
- *
- * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing divs for the content)
- */
-do_action( 'woocommerce_after_main_content' );
-
-/**
- * Hook: woocommerce_sidebar.
- *
- * @hooked woocommerce_get_sidebar - 10
- */
-do_action( 'woocommerce_sidebar' );
-
-get_footer( 'shop' );
+            wp_reset_postdata();
+        endif;
+        ?>
+    </section>
+</main>
