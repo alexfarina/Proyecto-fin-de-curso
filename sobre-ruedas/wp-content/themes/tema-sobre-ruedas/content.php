@@ -79,7 +79,7 @@
             else :
                 echo '<p>No hay productos disponibles en esta categoría.</p>';
             endif;
-
+        
             wp_reset_postdata();
         endif;
         ?>

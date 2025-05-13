@@ -43,10 +43,9 @@ p {
 
 /* Pie de página */
 #footer {
-    background-color: #333;
-    height: 150px;
+    background-color: white;
+    height: 190px;
     border-top: 2px solid black;
-    color: white;
 }
 
 .footer {
@@ -107,13 +106,6 @@ ul.products {
 }
 
 /* Estilo para la imagen del producto */
-.product .producto-imagen img {
-    width: 236px;
-    height: 305px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
 
 .product .producto-info h2 {
     font-size: 16px;
@@ -160,12 +152,9 @@ ul.products {
 
 /* Titulo */
 /* Ajuste del tamaño de fuente del título de los productos */
-.producto-titulo, .woocommerce-loop-product__title {
-    font-size: 14px; 
-}
 
 
-/* Estilo de los botones de navegación */
+/* Estilos barra navegación */
 .menu-categorias {
     display: flex;
     flex-wrap: wrap;
@@ -272,6 +261,7 @@ ul.products {
 
 .paginacion{
     margin-top: 40px;
+    display: flex;
   }
 
 .paginacion a {
@@ -297,3 +287,124 @@ ul.products {
     text-decoration: none;
     color: black;
 }
+
+.single-product-container{
+    display: flex;
+}
+.propiedades-producto-ind{
+    display: flex;
+    flex-direction: column;
+}
+
+.producto-alineacion-row{
+    display: flex;
+}
+
+.producto-alineacion-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.agregar-al-carrito {
+    background-color: darkorange;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 30px;
+    border: 2px solid black;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.agregar-al-carrito:hover {
+    background-color: #0073e6;
+    border-color: #005bb5;
+    transform: scale(1.1);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+.agregar-al-carrito:active {
+    background-color: #005bb5;
+    border-color: #003d8f;
+    transform: scale(0.98);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/*Estilos para pagina estática de contacto*/
+
+.contenedor-contacto {
+    max-width: 700px;
+    margin: auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.contenedor-contacto p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.formulario-contacto {
+    display: flex;
+    flex-direction: column;
+}
+
+.formulario-contacto label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.formulario-contacto input,
+.formulario-contacto textarea {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1.5px solid #bbb;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.formulario-contacto input:focus,
+.formulario-contacto textarea:focus {
+    border-color: #0073e6;
+    outline: none;
+}
+
+.boton-enviar {
+    background: #0073e6;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.boton-enviar:hover {
+    background: #005bb5;
+}
+
+
+/* Evitar que WooCommerce aplique su estilo de producto */
+.single-product .product {
+    all: unset;
+    /* Otras reglas CSS personalizadas que quieras añadir */
+}
+
+.single-product .product-title,
+.single-product .product-image,
+.single-product .product-price {
+    margin: 0;
+    padding: 0;
+}
+
+.product-image{
+    width: 500px;
+    height: 500px;
+}
+

@@ -4,15 +4,15 @@ defined( 'ABSPATH' ) || exit;
 get_header();
 
 // Obtener el ID del producto clicado
-$product_id = get_the_ID(); // Esto obtiene el ID del producto actual (el que está siendo visualizado)
+$product_id = get_the_ID();
 
 global $wpdb;
 
-// Consulta combinada para obtener los datos del producto y la marca usando JOIN
+// Consulta combinada para obtener los datos del producto y la marca
 $query = $wpdb->prepare(
-    "SELECT p.ID, p.post_title, p.post_content AS long_description, p.post_excerpt AS short_description, 
+    "SELECT p.ID, p.post_title, p.post_content AS descripcion_larga, p.post_excerpt AS descripcion_corta, 
             p.post_date, p.post_status,
-            t.name AS brand_name
+            t.name AS marca_nombre
      FROM {$wpdb->posts} p
      JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
      JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
@@ -21,88 +21,92 @@ $query = $wpdb->prepare(
     $product_id
 );
 
-// Ejecutar la consulta
-$product_data = $wpdb->get_row($query);
+$producto = $wpdb->get_row($query);
 
-// Verificar si hay datos del producto
-if ($product_data) :
+if ($producto) :
 ?>
 
 <main class="main">
     <section class="section">
-        <article <?php post_class(); ?>>
+        <div class="contenedor-producto-individual">
+            <article <?php post_class(); ?>>
 
-            <!-- Título del producto -->
-            <div class="product-title">
-                <h1><?php echo esc_html($product_data->post_title); ?></h1>
-            </div>
-
-            <!-- Detalles del producto -->
-            <div class="product-details">
-
-                <!-- Imagen del producto -->
-                <div class="product-image">
-                    <img src="<?php echo get_the_post_thumbnail_url( $product_id, 'full' ); ?>" alt="Imagen del producto">
+                <!-- Título -->
+                <div class="titulo-producto">
+                    <h4><?php echo esc_html($producto->post_title); ?></h4>
                 </div>
 
-                <!-- Descripción corta (HTML) -->
-                <div class="product-short-description">
-                    <h2>Descripción corta</h2>
-                    <p><?php echo wp_kses_post($product_data->short_description); ?></p>
+                <!-- Detalles -->
+                <div class="detalles-producto">
+
+                    <!-- Descripción corta -->
+                    <div class="descripcion-corta">
+                        <p><?php echo wp_kses_post($producto->descripcion_corta); ?></p>
+                    </div>
+
+                    <!-- Imagen -->
+                     <div class="producto-alineacion-row">
+                        <div class="imagen-producto">
+                            <img src="<?php echo get_the_post_thumbnail_url( $product_id, 'full' ); ?>" alt="Imagen del producto">
+                        </div>
+
+                        <!-- Estado -->
+                        <div class="producto-alineacion-col">
+                            <div class="estado-producto">
+                                <p><strong>Estado:</strong> <?php echo esc_html($producto->post_status); ?></p>
+                            </div>
+
+                            <!-- Precio -->
+                            <div class="precio-producto">
+                                <?php 
+                                $producto_wc = wc_get_product( $product_id ); 
+                                echo '<p>' . $producto_wc->get_price_html() . '</p>';
+                                ?>
+                            </div>
+
+                            <!-- Categorías -->
+                            <div class="categorias-producto">
+                                <p><strong>Categorías:</strong> <?php echo wc_get_product_category_list( $product_id ); ?></p>
+                            </div>
+
+                            <!-- Etiquetas -->
+                            <div class="etiquetas-producto">
+                                <p><strong>Etiquetas:</strong> <?php the_terms( $product_id, 'product_tag', '', ', ' ); ?></p>
+                            </div>
+
+                            <!-- Marca -->
+                            <div class="marca-producto">
+                                    <p><strong>Marca:</strong> <?php echo esc_html($producto->marca_nombre); ?></p>
+                            </div>
+                        </div>
+
+                        <div class="add-to-cart">
+                            <?php
+                            if ( $product = wc_get_product( $product_id ) ) :
+                            ?>
+                                <!-- Formulario para añadir al carrito -->
+                               <form action="<?php echo esc_url( home_url( '/' ) ); ?>" method="post">
+                                    <input type="hidden" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" />
+                                    <button type="submit" class="agregar-al-carrito">Añadir al carrito</button>
+                                </form>
+                            <?php else : ?>
+                                <p>Producto no disponible</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                     <!-- Descripción larga -->
+                    <div class="descripcion-larga">
+                        <?php echo wp_kses_post($producto->descripcion_larga); ?>
+                    </div>
+
+                    <!-- Fecha de publicación -->
+                    <div class="fecha-publicacion">
+                        <p><strong>Publicado en:</strong> <?php echo esc_html($producto->post_date); ?></p>
+                    </div>
                 </div>
 
-                <!-- Descripción larga (HTML) -->
-                <div class="product-long-description">
-                    <h2>Descripción larga</h2>
-                    <?php echo wp_kses_post($product_data->long_description); ?>
-                </div>
-
-                <!-- Fecha de publicación -->
-                <div class="product-publish-date">
-                    <p><strong>Publicado en:</strong> <?php echo esc_html($product_data->post_date); ?></p>
-                </div>
-
-                <!-- Estado del producto -->
-                <div class="product-status">
-                    <p><strong>Estado:</strong> <?php echo esc_html($product_data->post_status); ?></p>
-                </div>
-
-                <!-- Precio (este es solo un ejemplo de cómo obtenerlo de WooCommerce) -->
-                <div class="product-price">
-                    <?php 
-                    // Suponiendo que $product es un objeto de producto de WooCommerce
-                    $product = wc_get_product( $product_id ); 
-                    echo '<p>' . $product->get_price_html() . '</p>';
-                    ?>
-                </div>
-
-                <!-- Categorías del producto -->
-                <div class="product-categories">
-                    <p><strong>Categorías:</strong> <?php echo wc_get_product_category_list( $product_id ); ?></p>
-                </div>
-
-                <!-- Etiquetas del producto -->
-                <div class="product-tags">
-                    <p><strong>Etiquetas:</strong> <?php the_terms( $product_id, 'product_tag', '', ', ' ); ?></p>
-                </div>
-
-                <!-- Marca del producto (solo si está disponible) -->
-                <div class="product-brand">
-                    <?php if ($product_data->brand_name) : ?>
-                        <p><strong>Marca:</strong> <?php echo esc_html($product_data->brand_name); ?></p>
-                    <?php else : ?>
-                        <p><strong>Marca:</strong> No disponible</p>
-                    <?php endif; ?>
-                </div>
-
-                <!-- Botón para añadir al carrito -->
-                <div class="add-to-cart">
-                    <?php woocommerce_template_single_add_to_cart(); ?>
-                </div>
-
-            </div>
-
-        </article>
+            </article>
+        </div>
     </section>
 </main>
 

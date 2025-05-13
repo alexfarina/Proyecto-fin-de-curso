@@ -82,3 +82,4 @@ function desactivar_estilos_woocommerce_enlaces() {
 }
 
 add_action( 'wp_enqueue_scripts', 'desactivar_estilos_woocommerce_enlaces', 99 );
+
