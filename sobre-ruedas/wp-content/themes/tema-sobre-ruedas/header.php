@@ -22,7 +22,7 @@
                     <input type="search" class="search-field" placeholder="Buscar productos…" value="<?php echo get_search_query(); ?>" name="s" />
                 </label>
                 <input type="hidden" name="post_type" value="product" />
-                <button type="submit" class="search-submit">Buscar</button>
+                <button type="submit" class="search-submit">🔍</button>
             </form>
 
             <div class="paginas-estaticas">

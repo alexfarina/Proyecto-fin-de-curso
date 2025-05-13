@@ -15,11 +15,14 @@
                     echo 'Slug de la categoría: ' . $term->slug;
                 }
 
+                $pagina_actual = max( 1, get_query_var('paged') );//Obtenemos la página actual
+
                 // Crear los argumentos para WP_Query filtrando por la categoría actual
                 $args = array(
                     'post_type'      => 'product',
                     'posts_per_page' => 9,
                     'post_status'    => 'publish',
+                    'paged'          => $pagina_actual,
                     'tax_query'      => array(
                         array(
                             'taxonomy' => 'product_cat',
@@ -66,6 +69,13 @@
                     <?php
                 endwhile;
                 echo '</ul>'; 
+                 // Paginación para los prod del loop
+                 echo '<div class="paginacion">';
+                 echo paginate_links( array(
+                     'total' => $loop->max_num_pages, 
+                 ) );
+                 echo '</div>';
+
             else :
                 echo '<p>No hay productos disponibles en esta categoría.</p>';
             endif;

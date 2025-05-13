@@ -41,8 +41,8 @@ function mostrar_menu_de_productos() {
 
             echo '</li>';
         }
-
         echo '</ul>';
+
     } else {
         echo 'No se han encontrado categorías de productos.';
     }
@@ -82,4 +82,3 @@ function desactivar_estilos_woocommerce_enlaces() {
 }
 
 add_action( 'wp_enqueue_scripts', 'desactivar_estilos_woocommerce_enlaces', 99 );
-

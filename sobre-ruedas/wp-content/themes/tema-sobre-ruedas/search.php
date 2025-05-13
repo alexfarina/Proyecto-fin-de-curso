@@ -4,19 +4,21 @@ get_header();
 // Obtener término de búsqueda
 $search_term = get_search_query();
 
-echo '<h1>Resultados de búsqueda para: <mark>' . esc_html($search_term) . '</mark></h1>';
+$pagina_actual = max( 1, get_query_var('paged') );//Obtenemos la página actual
 
 // Consulta personalizada solo para productos
 $args = array(
     'post_type'      => 'product',
     'posts_per_page' => 9, 
     's'              => $search_term,
+    'paged'          => $pagina_actual,
 );
 
 $product_query = new WP_Query($args);
 
 echo '<main class="main">'; 
 echo '<section class="section">'; 
+echo '<h1>Resultados de búsqueda para: <mark>' . esc_html($search_term) . '</mark></h1>';
 
 if ($product_query->have_posts()) :
 
@@ -42,7 +44,13 @@ if ($product_query->have_posts()) :
         </li>
         <?php
     endwhile;
-    echo '</ul>'; 
+    echo '</ul>';
+      // Paginación para los prod del loop
+      echo '<div class="paginacion">';
+      echo paginate_links( array(
+          'total' => $product_query->max_num_pages, 
+      ) );
+      echo '</div>';
 else :
     echo '<p>No se encontraron productos relacionados.</p>';
 endif;

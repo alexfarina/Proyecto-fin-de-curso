@@ -14,22 +14,25 @@ body {
 /* Cabecera */
 #header {
     background-color: white;
-    height: 150px;
+    height: 190px;
     border-bottom: 2px solid black;
     color: black;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .header-top{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 .header-bot {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 10px;
+    margin-right: 100px;
 }
 
 
@@ -133,7 +136,7 @@ ul.products {
 }
 
 .product .producto-precio ins {
-    color: red;
+    color: darkorange;
     font-weight: bold;
     font-size: 16px;
     text-decoration: none;
@@ -166,6 +169,7 @@ ul.products {
 .menu-categorias {
     display: flex;
     flex-wrap: wrap;
+    margin-top: 10px;
 }
 
 .categoria {
@@ -176,10 +180,21 @@ ul.products {
 .categoria a {
     text-decoration: none;
     color: white;
-    padding: 10px;
-    background-color: grey;
+    padding: 12px 18px;
+    background-color: #333; 
+    border: 1px solid white; 
+    border-radius: 6px; 
     display: block;
     text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.categoria a:hover {
+    background-color: #f1f1f1;
+    color: black;
+    transform: translateY(-3px); 
+    border: 1px solid black;
 }
 
 .subcategorias {
@@ -189,10 +204,12 @@ ul.products {
     top: 90%;
     left: 0;
     padding: 10px;
-    background-color: #444;
+    color: white;
+    background-color: #222; 
     border-radius: 5px;
     margin-top: 5px;
     min-width: 180px;
+    border: 1px solid white;
 }
 
 .subcategorias li {
@@ -208,14 +225,75 @@ ul.products {
 }
 
 .subcategorias li a:hover {
-    background-color: #555;
-    color: white;
+    background-color: #f1f1f1;
+    color: black;
 }
-
 .categoria:hover .subcategorias {
     display: flex;
 }
 
 .categoria .subcategorias {
     transition: all 0.3s ease-in-out;
+}
+
+/*Estilos para formulario de búsqueda*/
+.search-form {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+  }
+  
+  .search-field {
+    width: 100%;
+    padding: 10px 40px 10px 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  .search-submit {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .search-submit:hover {
+    color: black;
+  }
+
+/*Estilos para la paginacion*/
+
+.paginacion{
+    margin-top: 40px;
+  }
+
+.paginacion a {
+    text-decoration: none; 
+    color: black;
+}
+
+.paginacion .current {
+    text-decoration: none;
+    color: black;
+    color: darkorange;
+}
+
+.page-numbers{
+    margin-top: 40px;
+    display: flex;
+    list-style: none;
+}
+.current{
+    color: darkorange;
+}
+.page-numbers li a{
+    text-decoration: none;
+    color: black;
 }
