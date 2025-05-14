@@ -48,38 +48,71 @@ function mostrar_menu_de_productos() {
     }
 }
 
-// Cambiar el número de columnas en las páginas de categorías de WooCommerce
-add_filter('loop_shop_columns', 'cambiar_columnas_categoria', 999);
 
-function cambiar_columnas_categoria() {
-    return 3;
-}
 
-remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
+function tema_sobre_ruedas_enqueue_scripts() {
 
-add_filter( 'woocommerce_enqueue_styles', 'quitar_estilos_visuales_woo' );
-function quitar_estilos_visuales_woo( $styles ) {
-    unset( $styles['woocommerce-general'] ); 
-    return $styles;
-}
-
-function tema_sobre_ruedas_enqueue_styles() {
     wp_enqueue_style('tema-sobre-ruedas-style', get_stylesheet_uri());
+
+
+    wp_enqueue_script('jquery');
+
+    // Script personalizado para AJAX "añadir al carrito"
+    wp_enqueue_script(
+        'add-to-cart-ajax',
+        get_template_directory_uri() . '/js/anadir-carrito.js',
+        array('jquery'),
+        '1.0',
+        true
+    );
+
+    // Pasar datos de PHP a JS
+    wp_localize_script('add-to-cart-ajax', 'miTemaVars', array(
+        'ajax_url'    => admin_url('admin-ajax.php'),
+        'carrito_url' => esc_url(get_permalink(get_page_by_path('carrito-desplegable')))
+    ));
 }
-add_action('wp_enqueue_scripts', 'tema_sobre_ruedas_enqueue_styles');
+add_action('wp_enqueue_scripts', 'tema_sobre_ruedas_enqueue_scripts', 20);
 
+// Eliminar estilos por defecto de WooCommerce que no se necesitan
+add_filter('woocommerce_enqueue_styles', function($styles) {
+    unset($styles['woocommerce-general']);
+    unset($styles['woocommerce-layout']);
+    return $styles;
+});
 
-add_filter( 'woocommerce_enqueue_styles', '__return_false' );
+// Cambiar a 3 columnas en tienda/categorías
+add_filter('loop_shop_columns', function () {
+    return 3;
+}, 999);
 
-// Eliminar el texto "¡Oferta!" de los productos con descuento
-remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
+// Quitar botón "añadir al carrito" del loop
+remove_action('woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10);
 
+// Quitar texto "¡Oferta!"
+remove_action('woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10);
 
-function desactivar_estilos_woocommerce_enlaces() {
-    // Desactiva los estilos de enlaces predeterminados de WooCommerce
-    wp_dequeue_style( 'woocommerce-general' ); // Desactiva el estilo general de WooCommerce
-    wp_dequeue_style( 'woocommerce-layout' );   // Desactiva el estilo de layout de WooCommerce
+// Manejador AJAX para añadir productos al carrito
+add_action('wp_ajax_woocommerce_ajax_add_to_cart', 'handle_ajax_add_to_cart');
+add_action('wp_ajax_nopriv_woocommerce_ajax_add_to_cart', 'handle_ajax_add_to_cart');
+
+function handle_ajax_add_to_cart() {
+    if (isset($_POST['product_id'], $_POST['quantity'])) {
+        $product_id = intval($_POST['product_id']);
+        $quantity = intval($_POST['quantity']);
+
+        $product = wc_get_product($product_id);
+        if (!$product || !$product->is_purchasable()) {
+            wp_send_json_error(['message' => 'Producto no válido o no disponible.']);
+        }
+
+        $anadir = WC()->cart->add_to_cart($product_id, $quantity);
+        if ($anadir) {
+            wp_send_json_success();
+        } else {
+            wp_send_json_error(['message' => 'No se pudo añadir el producto al carrito.']);
+        }
+    } else {
+        wp_send_json_error(['message' => 'Faltan datos en la solicitud.']);
+    }
 }
-
-add_action( 'wp_enqueue_scripts', 'desactivar_estilos_woocommerce_enlaces', 99 );
-

@@ -306,7 +306,7 @@ ul.products {
     justify-content: center;
 }
 
-.agregar-al-carrito {
+.single_add_to_cart_button {
     background-color: darkorange;
     color: white;
     font-size: 16px;
@@ -319,19 +319,20 @@ ul.products {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.agregar-al-carrito:hover {
+.single_add_to_cart_button:hover {
     background-color: #0073e6;
     border-color: #005bb5;
     transform: scale(1.1);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 
-.agregar-al-carrito:active {
+.single_add_to_cart_button:active {
     background-color: #005bb5;
     border-color: #003d8f;
     transform: scale(0.98);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 
 /*Estilos para pagina estática de contacto*/
 

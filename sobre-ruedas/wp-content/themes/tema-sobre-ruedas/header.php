@@ -29,8 +29,10 @@
                 <a href="http://localhost/sobre-ruedas/contacto/">Contacto</a>
                 <a href="http://localhost/sobre-ruedas/blog/">Blog</a>
                 <a href="http://localhost/sobre-ruedas/sobre-nosotros/">Sobre Nosotros</a>
-                <a href="#"><img src="http://localhost/sobre-ruedas/wp-content/uploads/2025/05/shopping-cart.png" alt="Carrito de compras"  style="height:30px;" /></a>
-                <a href="#"><img src="http://localhost/sobre-ruedas/wp-content/uploads/2025/05/tel-logo.png" alt="Teléfono"  style="height:30px;" /></a>
+                <a href="<?php echo esc_url( get_permalink( get_page_by_path('carrito-desplegable') ) ); ?>">
+                    <img src="http://localhost/sobre-ruedas/wp-content/uploads/2025/05/shopping-cart.png" alt="Carrito de compras" style="height:30px;" />
+                </a>
+                 <a href="#"><img src="http://localhost/sobre-ruedas/wp-content/uploads/2025/05/tel-logo.png" alt="Teléfono"  style="height:30px;" /></a>
             </div>
         </div>
 
