@@ -2,7 +2,6 @@
 defined( 'ABSPATH' ) || exit;
 
 get_header();
-
 // Obtener el ID del producto clicado
 $product_id = get_the_ID();
 
@@ -109,12 +108,10 @@ if ($producto) :
             </article>
         </div>
     </section>
-</main>
 
-<?php
-else :
-    echo 'Producto no encontrado';
-endif;
-
+<?php 
+endif; 
 get_footer();
 ?>
+
+

@@ -1,4 +1,4 @@
-<aside id="aside-carrito" class="aside-carrito">
+<section id="carrito-desplegable" class="carrito-desplegable oculto">
     <button id="cerrar-carrito" class="cerrar-carrito">✖</button>
     <h3>Tu carrito</h3>
 
@@ -11,17 +11,19 @@
             foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
                 $producto = $cart_item['data'];
                 $cantidad = $cart_item['quantity'];
-                echo '<li>';
+                echo '<li data-cart-item-key="' . esc_attr($cart_item_key) . '">';
                 echo $producto->get_image( [50, 50] );
                 echo '<span>' . esc_html( $producto->get_name() ) . '</span>';
                 echo ' × ' . $cantidad;
+                echo ' <button class="quitar-item" data-cart-item-key="' . esc_attr($cart_item_key) . '">✖</button>';
                 echo '</li>';
             }
             echo '</ul>';
-            echo '<p><a href="' . wc_get_cart_url() . '" class="ver-carrito-btn">Ver carrito completo</a></p>';
+
+            echo '<button id="vaciar-carrito" class="vaciar-carrito-btn">Vaciar carrito</button>';
         }
         ?>
     </div>
 
-    <p><a href="<?php echo home_url(); ?>" class="volver-menu">← Volver al inicio</a></p>
-</aside>
+    <p><button id="volver-carrito" class="volver-menu">← Volver</button></p>
+</section>

@@ -409,3 +409,20 @@ ul.products {
     height: 500px;
 }
 
+#carrito-desplegable {
+    position: fixed;
+    top: 0; right: 0;
+    width: 300px;
+    height: 100%;
+    background: white;
+    box-shadow: -3px 0 5px rgba(0,0,0,0.3);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 9999;
+}
+#carrito-desplegable.abierto {
+    transform: translateX(0);
+}
+.oculto {
+    display: none;
+}

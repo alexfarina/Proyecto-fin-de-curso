@@ -1,4 +1,18 @@
 jQuery(document).ready(function($) {
+    // Abrir carrito al pulsar botón
+    $('#boton-carrito').on('click', function(e) {
+        e.preventDefault();
+        $('#carrito-desplegable').addClass('abierto').removeClass('oculto');
+    });
+    console.log("Carrito");
+
+    // Cerrar carrito al pulsar botón cerrar
+    $('#cerrar-carrito').on('click', function() {
+        $('#carrito-desplegable').removeClass('abierto').addClass('oculto');
+    });
+});
+
+jQuery(document).ready(function($) {
     // Asegurarnos que el formulario no se envíe automáticamente
     $('form.cart').on('submit', function(e) {
         e.preventDefault();
@@ -32,6 +46,75 @@ jQuery(document).ready(function($) {
             },
             error: function() {
                 alert("Error en la solicitud AJAX.");
+            }
+        });
+    });
+});
+
+jQuery(document).ready(function($) {
+    // Cerrar sidebar
+    $('#volver-carrito, #cerrar-carrito').on('click', function() {
+        $('#carrito-desplegable').removeClass('abierto').addClass('oculto');
+    });
+
+    // Quitar producto individualmente
+  $('.quitar-item').on('click', function() {
+    const cartItemKey = $(this).data('cart-item-key');
+    console.log('Quitar item con key:', cartItemKey); 
+
+    $.ajax({
+        url: miTemaVars.ajax_url,
+        type: 'POST',
+        data: {
+            action: 'quitar_item_carrito',
+            cart_item_key: cartItemKey
+        },
+        success: function(response) {
+            console.log('Respuesta AJAX:', response);
+            location.reload(); // Refresca visualmente
+        },
+        error: function(error) {
+            console.error('Error AJAX:', error);
+        }
+    });
+});
+
+
+    // Vaciar carrito
+    $('#vaciar-carrito').on('click', function() {
+        $.ajax({
+            url: miTemaVars.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'vaciar_carrito'
+            },
+            success: function() {
+                location.reload();
+            }
+        });
+    });
+});
+
+jQuery(document).ready(function($) {
+    $('#vaciar-carrito').on('click', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: miTemaVars.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'vaciar_todo_el_carrito'
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Carrito vaciado.');
+                    location.reload(); 
+                } else {
+                    alert('Error al vaciar el carrito.');
+                }
+            },
+            error: function() {
+                alert('Fallo la solicitud AJAX.');
             }
         });
     });
