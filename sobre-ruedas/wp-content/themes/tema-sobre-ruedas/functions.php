@@ -1,5 +1,5 @@
 <?php
-// Incluye archivos
+//Archivos incluidos y requeridos
 require get_template_directory() . '/inc/menu/menu-productos.php';
 
 require get_template_directory() . '/inc/woocommerce/carrito.php';

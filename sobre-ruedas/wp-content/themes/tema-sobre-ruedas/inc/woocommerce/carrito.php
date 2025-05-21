@@ -7,7 +7,12 @@ function quitar_item_carrito() {
         WC()->cart->remove_cart_item($cart_item_key);
         WC()->cart->set_session();
         WC()->cart->calculate_totals();
-        wp_send_json_success(['mensaje' => 'Producto eliminado del carrito']);
+                $contenido_carrito = renderizar_carrito_desplegable();
+
+        wp_send_json_success([
+            'html_carrito' => $contenido_carrito,
+            'mensaje' => 'Producto eliminado del carrito'
+        ]);
     } else {
         wp_send_json_error(['mensaje' => 'No se recibió el cart_item_key']);
     }
@@ -15,17 +20,21 @@ function quitar_item_carrito() {
 
 add_action('wp_ajax_vaciar_todo_el_carrito', 'vaciar_todo_el_carrito');
 add_action('wp_ajax_nopriv_vaciar_todo_el_carrito', 'vaciar_todo_el_carrito');
+
 function vaciar_todo_el_carrito() {
     WC()->cart->empty_cart();
-    wp_send_json_success(['mensaje' => 'Carrito vaciado']);
+    // Recalcular los totales después de vaciar el carrito
+    WC()->cart->calculate_totals();
+    // Establecer la sesión del carrito
+    WC()->cart->set_session();
+
+    // Generamos el HTML del carrito vacío
+    $contenido_carrito = renderizar_carrito_desplegable();
+
+    wp_send_json_success([
+        'html_carrito' => $contenido_carrito,
+        'mensaje' => 'Carrito vaciado.'
+    ]);
 }
 
-add_action('init', function() {
-    if (isset($_GET['prueba_quitar'], $_GET['key'])) {
-        WC()->cart->remove_cart_item(sanitize_text_field($_GET['key']));
-        WC()->cart->calculate_totals();
-        WC()->cart->set_session();
-        echo 'Prueba eliminar: OK';
-        exit;
-    }
-});
+

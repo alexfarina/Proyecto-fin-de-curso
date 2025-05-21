@@ -410,9 +410,10 @@ ul.products {
 }
 
 #carrito-desplegable {
+    padding:40px 20px;
     position: fixed;
     top: 0; right: 0;
-    width: 300px;
+    width: 450px;
     height: 100%;
     background: white;
     box-shadow: -3px 0 5px rgba(0,0,0,0.3);
@@ -425,4 +426,21 @@ ul.products {
 }
 .oculto {
     display: none;
+}
+
+/*Estilos para el carrito*/
+
+.lista-carrito li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contenido-carrito .lista-carrito{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#cerrar-carrito{
+    float: right;
 }
