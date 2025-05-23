@@ -51,15 +51,12 @@ if ($producto) :
 
                         <!-- Estado -->
                         <div class="producto-alineacion-col">
-                            <div class="estado-producto">
-                                <p><strong>Estado:</strong> <?php echo esc_html($producto->post_status); ?></p>
-                            </div>
 
                             <!-- Precio -->
                             <div class="precio-producto">
                                 <?php 
                                 $producto_wc = wc_get_product( $product_id ); 
-                                echo '<p>' . $producto_wc->get_price_html() . '</p>';
+                                echo '<p><strong>Precio: </strong>' . $producto_wc->get_price_html() . '</p>';
                                 ?>
                             </div>
 

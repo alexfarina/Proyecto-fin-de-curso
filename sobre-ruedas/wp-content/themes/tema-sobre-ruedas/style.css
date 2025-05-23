@@ -41,6 +41,18 @@ p {
     margin: 40px;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+
+.logo-h2 {
+  font-family: 'Parisienne', cursive;
+  font-size: 1.2rem;
+  font-weight: normal;
+  color: #111;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+
 /* Pie de página */
 #footer {
     background-color: white;
@@ -306,6 +318,12 @@ ul.products {
     justify-content: center;
 }
 
+.producto-alineacion-col p {
+    margin: 20px;
+    line-height: 1.4;
+    font-size: 14px; /* opcional: más compacto */
+}
+
 .single_add_to_cart_button {
     background-color: darkorange;
     color: white;
@@ -410,9 +428,10 @@ ul.products {
 }
 
 #carrito-desplegable {
+    padding:40px 20px;
     position: fixed;
     top: 0; right: 0;
-    width: 300px;
+    width: 450px;
     height: 100%;
     background: white;
     box-shadow: -3px 0 5px rgba(0,0,0,0.3);
@@ -425,4 +444,129 @@ ul.products {
 }
 .oculto {
     display: none;
+}
+
+/*Estilos para el carrito*/
+
+.lista-carrito {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lista-carrito li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin-top:10px;
+}
+
+.lista-carrito li span {
+    text-align: center;
+}
+
+.contenido-carrito .lista-carrito{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#cerrar-carrito{
+    float: right;
+    background: none;
+    border: none;
+    color: grey;
+    font-size: 16px;
+    cursor: pointer;
+}
+#cerrar-carrito:hover{
+    color: black;
+    transform: scale(1.1);
+}
+.quitar-item {
+    background: none;
+    border: none;
+    color: grey;
+    font-size: 16px;
+    cursor: pointer;
+}
+.quitar-item:hover {
+    color: black;
+    transform: scale(1.1);
+}
+
+/*Menu para filtrar por precio y marca*/
+#div_filtros {
+  position: fixed;
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.oculto {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+.cerrar-popup {
+  display: block;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.filtros-contenedor{
+    display:flex;
+}
+
+.filtro-item{
+    padding: 20px;
+    background-color: #222;
+    color:#f1f1f1;
+    border: 1px solid white;
+}
+
+.filtro-item:hover{
+    padding: 20px;
+    background-color: #f1f1f1;
+    color:black;
+    border: 1px solid black;
+}
+
+.contenido-filtro{
+    margin: 20px;
+}
+
+.filtro-item span{
+    margin-left: 15px;
+}
+
+.boton-filtros {
+  display: block;
+  background-color: #f1f1f1;
+  color: black;
+  border: 1px solid black;
+  padding: 5px;
+}
+.boton-filtros:hover {
+  display: block;
+  background-color: #222;
+  color: #f1f1f1;
+  border: 1px solid #f1f1f1;
+  padding: 5px;
 }

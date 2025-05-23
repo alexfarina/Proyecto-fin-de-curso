@@ -9,8 +9,14 @@
 <body <?php body_class(); ?>>
     <header id="header" class="header">
         <div class="header-top">
+            <div class="menu_marcas">
+                <a href="#" id="link-menu-filtros">
+                    <img src="http://localhost/sobre-ruedas/wp-content/uploads/2025/05/icono_menu_marcas.png" alt="Menu Marcas" style="height:30px;" />
+                </a>
+            </div>
+
             <div class="logo">
-            <h2 class="logo">Sobre Ruedas</h2>
+            <h2 class="logo-h2">Sobre Ruedas</h2>
             <a href="<?php echo home_url(); ?>" style="text-decoration:none; color:white; display:flex; align-items:center; gap:10px;">
                 <img src="http://localhost/sobre-ruedas/wp-content/uploads/2025/05/skateboard-logo2.png" alt="Sobre Ruedas" style="height:30px;">
             </a>
